@@ -1,15 +1,13 @@
-package devweb.transactions.agenda;
+package devweb.transactions.agenda.controller;
 
 import java.io.*;
 import java.util.Date;
 import java.util.List;
 
-import devweb.transactions.agenda.model.EventModel;
+import devweb.transactions.agenda.model.Event;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-
-import javax.xml.crypto.Data;
 
 @WebServlet(name = "agenda", value = "/agenda")
 public class AgendaServlet extends HttpServlet {
@@ -32,7 +30,7 @@ public class AgendaServlet extends HttpServlet {
 
     }
 
-    private List<EventModel> showAgenda(){
+    private List<Event> showAgenda(){
 
         return List.of();
     }
