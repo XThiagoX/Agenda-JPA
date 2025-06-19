@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="java.util.List, devweb." %>
+<%@ page import="java.util.List" %>
 <%@ page import="devweb.transactions.agenda.model.Event" %>
 <html>
 <head>
@@ -9,16 +9,17 @@
 <h1>Agenda de Eventos</h1>
 
 <h2>Criar Evento</h2>
-<form action="/events" method="post">
+<form action="http://localhost:8080/Agenda-1.0-SNAPSHOT/agenda" method="post">
     <input type="hidden" name="action" value="add" />
     <label>Nome: <input type="text" name="name" required /></label><br/>
     <label>Data: <input type="date" name="date" required /></label><br/>
-    <label>Início: <input type="time" name="start" required /></label><br/>
-    <label>Término: <input type="time" name="end" required /></label><br/>
+    <label>Início: <input type="time" name="startHour" required /></label><br/>
+    <label>Término: <input type="time" name="endHour" required /></label><br/>
     <button type="submit">Adicionar</button>
 </form>
 
 <h2>Eventos</h2>
+
 <%
     List<Event> events = (List<Event>) session.getAttribute("events");
     if (events == null || events.isEmpty()) {
@@ -34,7 +35,7 @@
         <td><%= e.getStartHour() %></td>
         <td><%= e.getEndHour() %></td>
         <td>
-            <form action="events" method="post" style="display:inline;">
+            <form action="/events" method="post" style="display:inline;">
                 <input type="hidden" name="action" value="delete" />
                 <input type="hidden" name="id" value="<%= e.getId() %>" />
                 <button type="submit">Excluir</button>
