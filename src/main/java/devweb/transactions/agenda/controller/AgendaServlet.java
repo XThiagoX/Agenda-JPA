@@ -41,7 +41,7 @@ public class AgendaServlet extends HttpServlet {
                 events.add(newEvent);
             }
         }
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/agenda");
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
