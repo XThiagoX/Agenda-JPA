@@ -13,8 +13,8 @@
     <input type="hidden" name="action" value="add" />
     <label>Nome: <input type="text" name="name" required /></label><br/>
     <label>Data: <input type="date" name="date" required /></label><br/>
-    <label>Início: <input type="time" name="startHour" required /></label><br/>
-    <label>Término: <input type="time" name="endHour" required /></label><br/>
+<%--    <label>Início: <input type="time" name="startHour" required /></label><br/>--%>
+<%--    <label>Término: <input type="time" name="endHour" required /></label><br/>--%>
     <button type="submit">Adicionar</button>
 </form>
 

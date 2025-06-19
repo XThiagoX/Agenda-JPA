@@ -21,12 +21,8 @@ public class AgendaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
-        PrintWriter writer = response.getWriter();
-        writer.println("<h1>Página está sendo acessada </h1>");
         String name = request.getParameter("name");
         LocalDate date = LocalDate.parse(request.getParameter("date"));
-
-
 //        String timeStart =  String.valueOf(LocalTime.parse(request.getParameter("startHour")));
 //        String timeEnd = String.valueOf(LocalTime.parse(request.getParameter("endHour")));
 
@@ -43,20 +39,9 @@ public class AgendaServlet extends HttpServlet {
                     session.setAttribute("events", events);
                 }
                 events.add(newEvent);
-
-
-                response.setContentType("text/html");
-                writer.println("<ul>");
-                writer.println("<il> Nome: " + name + "</il>");
-                writer.println("<il> Date: " + date + "</il>");
-//                writer.println("<il> Horário de Início: " + timeStart + "</il>");
-//                writer.println("<il> Horário de Termino: " + timeEnd + "</il>");
-                writer.println("/<ul>");
-
             }
         }
-
-
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -65,11 +50,6 @@ public class AgendaServlet extends HttpServlet {
         request.getRequestDispatcher("/index.jsp").forward(request, response);
 
 
-    }
-
-    private List<Event> showAgenda(){
-
-        return List.of();
     }
 
     public void destroy() {
