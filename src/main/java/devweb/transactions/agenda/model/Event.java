@@ -1,16 +1,18 @@
 package devweb.transactions.agenda.model;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.UUID;
 
 public class Event {
 
-    private Long id;
+    private String id = UUID.randomUUID().toString();
     private String eventName;
-    private Date eventDate;
+    private LocalDate eventDate;
     private String startHour;
     private String endHour;
 
-    public Event(Long id, String eventName, Date eventDate, String startHour, String endHour) {
+    public Event(String id, String eventName, LocalDate eventDate, String startHour, String endHour) {
         this.id = id;
         this.eventName = eventName;
         this.eventDate = eventDate;
@@ -19,7 +21,7 @@ public class Event {
     }
     // getters and setters
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -31,11 +33,11 @@ public class Event {
         this.eventName = eventName;
     }
 
-    public Date getEventDate() {
+    public LocalDate getEventDate() {
         return eventDate;
     }
 
-    public void setEventDate(Date eventDate) {
+    public void setEventDate(LocalDate eventDate) {
         this.eventDate = eventDate;
     }
 
