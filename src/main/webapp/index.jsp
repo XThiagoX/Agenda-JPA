@@ -35,7 +35,7 @@
         <td><%= e.getStartHour() %></td>
         <td><%= e.getEndHour() %></td>
         <td>
-            <form action="/events" method="post" style="display:inline;">
+            <form action="http://localhost:8080/Agenda-1.0-SNAPSHOT/agenda" method="post" style="display:inline;">
                 <input type="hidden" name="action" value="delete" />
                 <input type="hidden" name="id" value="<%= e.getId() %>" />
                 <button type="submit">Excluir</button>

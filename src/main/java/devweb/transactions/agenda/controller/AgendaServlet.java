@@ -20,27 +20,31 @@ public class AgendaServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        HttpSession session = request.getSession();
+        String action = request.getParameter("action");
 
-        String name = request.getParameter("name");
-        LocalDate date = LocalDate.parse(request.getParameter("date"));
-//        String timeStart =  String.valueOf(LocalTime.parse(request.getParameter("startHour")));
-//        String timeEnd = String.valueOf(LocalTime.parse(request.getParameter("endHour")));
+        List<Event> events = (List<Event>) session.getAttribute("events");
 
         // verificando ação de formulário
-        String action = request.getParameter("action");{
-            if (Objects.equals(action, "add")){
-                Event newEvent = new Event(id, name, date, startHour, endHour);
 
-                HttpSession session = request.getSession();
-                List<Event> events = (List<Event>) session.getAttribute("events");
+            if (Objects.equals(action, "add")){
+                String name = request.getParameter("name");
+                LocalDate date = LocalDate.parse(request.getParameter("date"));
+                String startHour =  String.valueOf(LocalTime.parse(request.getParameter("startHour")));
+                String endHour = String.valueOf(LocalTime.parse(request.getParameter("endHour")));
+
+                Event newEvent = new Event(id, name, date, startHour, endHour);
 
                 if (events == null) {
                     events = new ArrayList<>();
                     session.setAttribute("events", events);
                 }
                 events.add(newEvent);
+            } else if (Objects.equals(action, "delete")) {
+                String id = request.getParameter("id");
+                events.removeIf(event -> event.getId().equals(id));
             }
-        }
+
         response.sendRedirect(request.getContextPath() + "/agenda");
     }
 
@@ -48,10 +52,5 @@ public class AgendaServlet extends HttpServlet {
         response.setContentType("text/html");
 
         request.getRequestDispatcher("/index.jsp").forward(request, response);
-
-
-    }
-
-    public void destroy() {
     }
 }
