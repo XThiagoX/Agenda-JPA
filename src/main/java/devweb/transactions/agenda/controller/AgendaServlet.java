@@ -13,7 +13,7 @@ import jakarta.servlet.annotation.*;
 @WebServlet(name = "agenda", value = "/agenda")
 public class AgendaServlet extends HttpServlet {
 
-
+    @SuppressWarnings("unchecked")
     private List<Event> getEventList(HttpServletRequest request ) throws ServletException, IOException {
         List<Event> list = (List<Event>) request.getSession().getAttribute("events");
         if (list == null){
