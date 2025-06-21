@@ -13,8 +13,8 @@
     <input type="hidden" name="action" value="add" />
     <label>Nome: <input type="text" name="name" required /></label><br/>
     <label>Data: <input type="date" name="date" required /></label><br/>
-<%--    <label>Início: <input type="time" name="startHour" required /></label><br/>--%>
-<%--    <label>Término: <input type="time" name="endHour" required /></label><br/>--%>
+    <label>Início: <input type="time" name="startHour" required /></label><br/>
+    <label>Término: <input type="time" name="endHour" required /></label><br/>
     <button type="submit">Adicionar</button>
 </form>
 
@@ -27,15 +27,16 @@
 <p>Não há eventos.</p>
 <% } else { %>
 <table border="1">
-    <tr><th>Nome</th><th>Data</th><th>Início</th><th>Término</th><th>Ações</th></tr>
+    <tr><th>id</th><th>Nome</th><th>Data</th><th>Início</th><th>Término</th><th>Ações</th></tr>
     <% for (Event e : events) { %>
     <tr>
+        <td><%= e.getId() %></td>
         <td><%= e.getEventName() %></td>
         <td><%= e.getEventDate() %></td>
         <td><%= e.getStartHour() %></td>
         <td><%= e.getEndHour() %></td>
         <td>
-            <form action="http://localhost:8080/Agenda-1.0-SNAPSHOT/agenda" method="post" style="display:inline;">
+            <form action="agenda" method="post" style="display:inline;">
                 <input type="hidden" name="action" value="delete" />
                 <input type="hidden" name="id" value="<%= e.getId() %>" />
                 <button type="submit">Excluir</button>
