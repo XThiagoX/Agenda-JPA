@@ -27,7 +27,7 @@ public class AgendaServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         HttpSession session = request.getSession();
         List<Event> events = getEventList(request);
-        // verificando ação de formulário
+
         String action = request.getParameter("action");{
             if (Objects.equals(action, "add")){
                 String id = UUID.randomUUID().toString();
@@ -35,10 +35,6 @@ public class AgendaServlet extends HttpServlet {
                 LocalDate date = LocalDate.parse(request.getParameter("date"));
                 String startHour =  String.valueOf(LocalTime.parse(request.getParameter("startHour")));
                 String endHour = String.valueOf(LocalTime.parse(request.getParameter("endHour")));
-                if (events == null) {
-                    events = new ArrayList<>();
-                    session.setAttribute("events", events);
-                }
                 events.add(new Event(id, name, date, startHour, endHour));
             } else if (Objects.equals(action, "delete")) {
                 String enventId = request.getParameter("id");
