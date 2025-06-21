@@ -35,36 +35,28 @@ public class AgendaServlet extends HttpServlet {
         HttpSession session = request.getSession();
         List<Event> events = getEventList(request);
 
-        String name = request.getParameter("name");
-        LocalDate date = LocalDate.parse(request.getParameter("date"));
-//        String timeStart =  String.valueOf(LocalTime.parse(request.getParameter("startHour")));
-//        String timeEnd = String.valueOf(LocalTime.parse(request.getParameter("endHour")));
-
-
         // verificando ação de formulário
         String action = request.getParameter("action");{
             if (Objects.equals(action, "add")){
-                Event newEvent = new Event(id, name, date, startHour, endHour);
 
+                String name = request.getParameter("name");
+                LocalDate date = LocalDate.parse(request.getParameter("date"));
+//        String timeStart =  String.valueOf(LocalTime.parse(request.getParameter("startHour")));
+//        String timeEnd = String.valueOf(LocalTime.parse(request.getParameter("endHour")));
 
                 if (events == null) {
                     events = new ArrayList<>();
                     session.setAttribute("events", events);
                 }
-                events.add(newEvent);
+                events.add(new Event(id, name, date, startHour, endHour));
                 System.out.println("Action recebida: ");
                 System.out.println("ID para deletar: ");
-            }
-
-            else if ("delete".equals(action)) {
-                String id = request.getParameter("id");
-                System.out.println("Action recebida: ");
-                System.out.println("ID para deletar: ");
-
+            } else if (Objects.equals(action, "delete")) {
+                String enventId = request.getParameter("id");
+                events.removeIf(event -> event.getId().equals(enventId));
             }
             response.sendRedirect(request.getContextPath() + "/agenda");
         }
-
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
