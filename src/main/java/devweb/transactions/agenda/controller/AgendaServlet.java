@@ -12,7 +12,7 @@ import jakarta.servlet.annotation.*;
 
 @WebServlet(name = "agenda", value = "/agenda")
 public class AgendaServlet extends HttpServlet {
-    String id = UUID.randomUUID().toString();
+
 
     private List<Event> getEventList(HttpServletRequest request ) throws ServletException, IOException {
         List<Event> list = (List<Event>) request.getSession().getAttribute("events");
@@ -30,6 +30,7 @@ public class AgendaServlet extends HttpServlet {
         // verificando ação de formulário
         String action = request.getParameter("action");{
             if (Objects.equals(action, "add")){
+                String id = UUID.randomUUID().toString();
                 String name = request.getParameter("name");
                 LocalDate date = LocalDate.parse(request.getParameter("date"));
                 String startHour =  String.valueOf(LocalTime.parse(request.getParameter("startHour")));
