@@ -3,9 +3,7 @@ package devweb.transactions.agenda.dao;
 import devweb.transactions.agenda.model.Event;
 import devweb.transactions.agenda.util.ConnectionFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class EventDAO {
@@ -19,13 +17,19 @@ public class EventDAO {
         insertEvent.setString(5, event.getEndHour());
 
         insertEvent.executeUpdate();
+        connection.close();
     }
 
     public List<Event> getAll() throws SQLException {
         return null;
     }
 
-    public void delete(Event event) throws SQLException {
 
+
+    public void delete(Event event) throws SQLException {
+        PreparedStatement deleteEvent = ConnectionFactory.getConnection().prepareStatement("delete from events where id = ?");
+        deleteEvent.setString(1, event.getId());
+        deleteEvent.executeUpdate();
+        deleteEvent.close();
     }
 }
