@@ -1,10 +1,12 @@
 package devweb.transactions.agenda.controller;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
+import devweb.transactions.agenda.dao.EventDAO;
 import devweb.transactions.agenda.model.Event;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -12,7 +14,6 @@ import jakarta.servlet.annotation.*;
 
 @WebServlet(name = "agenda", value = "/agenda")
 public class AgendaServlet extends HttpServlet {
-
     @SuppressWarnings("unchecked")
     private List<Event> getEventList(HttpServletRequest request ) throws ServletException, IOException {
         List<Event> list = (List<Event>) request.getSession().getAttribute("events");
@@ -35,7 +36,15 @@ public class AgendaServlet extends HttpServlet {
                 LocalDate date = LocalDate.parse(request.getParameter("date"));
                 String startHour =  String.valueOf(LocalTime.parse(request.getParameter("startHour")));
                 String endHour = String.valueOf(LocalTime.parse(request.getParameter("endHour")));
-                events.add(new Event(id, name, date, startHour, endHour));
+
+                Event event = new Event(id, name, date, startHour, endHour);
+                EventDAO  eventDAO = new EventDAO();
+                try {
+                    eventDAO.insert(event);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
             } else if (Objects.equals(action, "delete")) {
                 String enventId = request.getParameter("id");
                 events.removeIf(e -> e.getId().equals(enventId));
