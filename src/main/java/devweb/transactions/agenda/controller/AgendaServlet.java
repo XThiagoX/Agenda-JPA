@@ -41,13 +41,23 @@ public class AgendaServlet extends HttpServlet {
                 EventDAO  eventDAO = new EventDAO();
                 try {
                     eventDAO.insert(event);
+                    events.add(event);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
 
             } else if (Objects.equals(action, "delete")) {
-                String enventId = request.getParameter("id");
-                events.removeIf(e -> e.getId().equals(enventId));
+                String eventId = request.getParameter("id");
+                events.removeIf(e -> e.getId().equals(eventId));
+
+                EventDAO eventDAO = new EventDAO();
+                Event enventFound = null;
+                try {
+                    enventFound = eventDAO.getById(eventId);
+                    eventDAO.delete(enventFound);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
             response.sendRedirect(request.getContextPath() + "/agenda");
         }
