@@ -24,7 +24,25 @@ public class EventDAO {
         return null;
     }
 
+    public Event getById(String id) throws SQLException {
+        Connection connection = ConnectionFactory.getConnection();
+        PreparedStatement selectEvent = connection.prepareStatement("select * from events where id = ?");
+        selectEvent.setString(1, id);
+        ResultSet resultSet = selectEvent.executeQuery();
 
+        if (resultSet.next()) {
+            Event event = new Event(
+                    resultSet.getString("id"),
+                    resultSet.getString("name"),
+                    resultSet.getDate("date").toLocalDate(),
+                    resultSet.getString("startHour"),
+                    resultSet.getString("endHour")
+            );
+            return event;
+        }else {
+            return null;
+        }
+    }
 
     public void delete(Event event) throws SQLException {
         PreparedStatement deleteEvent = ConnectionFactory.getConnection().prepareStatement("delete from events where id = ?");
